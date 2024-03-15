@@ -1,9 +1,19 @@
 """ Flask app """
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS  # Import the CORS module
 
 app = Flask(__name__)
 CORS(app)
+
+"""home page"""
+@app.route('/')
+def home():
+    return render_template("home.html")
+
+"""sign in"""
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
 """Define your endpoint to calculate Physique Pro"""
 @app.route('/api/calculate_physique_pro', methods=['POST'])

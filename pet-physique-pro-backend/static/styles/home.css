@@ -1,0 +1,45 @@
+body {
+    background-image: url("../images/0-cover_page.jpeg");
+    background-size: cover;
+    align-content: center;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    background-color: maroon;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+#home_flex {
+    display: flex;
+    width: 80%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
+#main {
+    font-size: xx-large;
+    width: 50%;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+#text {
+    padding-top: 16%;
+    padding-bottom: 20%;
+    width: 50%;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
