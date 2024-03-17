@@ -28,3 +28,32 @@ def create_pet():
     
     pet_schema = PetSchema()
     return jsonify(pet_schema.dump(new_pet)), 201
+
+"""Update pet route"""
+@app_views.route("/pets/<int:pet_id>", methods=["PUT"], strict_slashes=False)
+def update_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+    if not pet:
+        return jsonify({"error": "Pet not found"}), 404
+    data = request.json
+    if "type" not in data and "weight" not in data and "height" not in data:
+        return jsonify({"error": "No data provided for update"}), 400
+    if "type" in data:
+        pet.type = data["type"]
+    if "weight" in data:
+        pet.weight = data["weight"]
+    if "height" in data:
+        pet.height = data["height"]
+    db.session.commit()
+    pet_schema = PetSchema()
+    return jsonify(pet_schema.dump(pet))
+
+"""Delete pet route"""
+@app_views.route("/pets/<int:pet_id>", methods=["DELETE"], strict_slashes=False)
+def delete_pet(pet_id):
+    pet = Pet.query.get(pet_id)
+    if not pet:
+        return jsonify({"error": "Pet not found"}), 404
+    db.session.delete(pet)
+    db.session.commit()
+    return jsonify({"message": "Pet deleted successfully"})
