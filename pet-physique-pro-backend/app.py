@@ -35,6 +35,11 @@ def home():
 def login():
     return render_template("login.html")
 
+"""sign up"""
+@app.route('/sign-up')
+def signin():
+    return render_template("signin.html")
+
 # Run the Flask app
 if __name__ == '__main__':
      # Importing db here ensures it's imported within the application context.
