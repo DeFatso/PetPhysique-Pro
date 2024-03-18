@@ -1,0 +1,41 @@
+body {
+    background-image: url("../images/0-login_page.jpeg");
+    background-size: cover;
+    align-content: center;
+}
+
+#createPetForm {
+    width: 50%;
+    display: block;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: center;
+    border: 2px aqua solid;
+}
+nav {
+    display: flex;
+    width: 100%;
+    background-color: maroon;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+#type {
+    background-color: aqua;
+    width: 8%;
+}
+
+label {
+    width: 50%;
+    background-color: blue;
+}

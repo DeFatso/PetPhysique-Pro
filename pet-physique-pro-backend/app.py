@@ -38,7 +38,12 @@ def login():
 """sign up"""
 @app.route('/sign-up')
 def signin():
-    return render_template("signin.html")
+    return render_template("signup.html")
+
+"""create pet page"""
+@app.route('/create_pet')
+def create_pet_page():
+    return render_template('create_pet.html')
 
 # Run the Flask app
 if __name__ == '__main__':
