@@ -1,0 +1,41 @@
+@keyframes changeBackground {
+    0% { background-image: url("../images/background_image_1.jpeg"); }
+    33.33% { background-image: url("../images/background_image_3.jpeg"); }
+    66.66% { background-image: url("../images/background_image_2.jpeg"); }
+    100% { background-image: url("../images/background_image_4.jpeg"); }
+}
+
+body {
+    animation: changeBackground 9s infinite;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0%;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    background-color: maroon;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+#about_us {
+    color: #ffffff;
+    padding: 8% 8%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 10%;
+    background-color: rgba(165, 42, 42, 0.431);
+}

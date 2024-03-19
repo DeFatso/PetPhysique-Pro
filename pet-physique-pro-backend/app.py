@@ -45,6 +45,11 @@ def signin():
 def create_pet_page():
     return render_template('create_pet.html')
 
+"""About us page"""
+@app.route('/about-us')
+def about_us():
+    return render_template('about_us.html')
+
 # Run the Flask app
 if __name__ == '__main__':
      # Importing db here ensures it's imported within the application context.
