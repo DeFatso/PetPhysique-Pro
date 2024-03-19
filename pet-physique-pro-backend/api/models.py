@@ -15,3 +15,14 @@ class Pet(db.Model):
 class PetSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Pet
+
+
+"""The User model"""
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False, unique=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
