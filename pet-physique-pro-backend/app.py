@@ -1,12 +1,17 @@
 """ Flask app """
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, redirect, url_for
 from api.db import db # Import Database setup
 from api.models import ma
+from api.models import User
 from api.blueprint import app_views
 import os
 from flask_cors import CORS  # Import the CORS module
+from flask_bcrypt import Bcrypt  # Import bcrypt for pswd hashing
+
 
 app = Flask(__name__)
+app.secret_key = 'PetPhysique' # for session management
+
 
 """Database configuration"""
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -23,6 +28,8 @@ ma.init_app(app)
 app.register_blueprint(app_views)
 """implement cors to all origin"""
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+"""nitialize bcrypt"""
+bcrypt = Bcrypt(app)
 
 
 """home page"""
@@ -31,14 +38,55 @@ def home():
     return render_template("home.html")
 
 """sign in"""
-@app.route('/login')
+@app.route('/login', methods=["POST", "GET"])
 def login():
-    return render_template("login.html")
+    # get user data from login form
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    # Check if username/email and password are provided
+    if not username or not password:
+        return render_template("login.html", error='Missing username/email or password')
+
+    # Query the database for the user
+    user = User.query.filter((User.username == username) | (User.email == username)).first()
+
+    # Check if user exists and password is correct
+    if user and bcrypt.check_password_hash(user.password, password):
+        # Store user's ID in session
+        session['user_id'] = user.id
+        # Redirect to dashboard or profile page
+        return redirect(url_for('home'))
+    else:
+        return render_template('login.html', error='Invalid username/email or password')
+
 
 """sign up"""
-@app.route('/sign-up')
+@app.route('/sign-up', methods=["POST", "GET"])
 def signin():
-    return render_template("signup.html")
+    if request.method == "POST":
+        # Get data from request
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # if username/email already exists render login page
+        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+            return render_template('login.html', error='User already exists. Please log in.')
+
+        # If not, reate a new user
+        new_user = User(username=username, email=email, password=bcrypt.generate_password_hash(password).decode('utf-8'))
+        db.session.add(new_user)
+        db.session.commit()
+
+        # Store user's ID in session
+        session['user_id'] = new_user.id
+
+        # Redirect to dashboard (We have to change this to profile page)
+        return redirect(url_for('home'))
+
+    else:
+        return render_template("signup.html")
 
 """create pet page"""
 @app.route('/create_pet')
