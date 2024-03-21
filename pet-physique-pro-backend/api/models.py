@@ -22,10 +22,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False, unique=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    password_hash = db.Column(db.String(128), nullable=False) # only hashed pswd is stored
+    password = db.Column(db.String(128), nullable=False) # only hashed pswd is stored
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
         """ ignore password when instantiating"""
-        exclude = ['password_hash']
+        # exclude = ['password_hash']
