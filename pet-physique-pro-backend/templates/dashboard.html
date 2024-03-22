@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/styles/dashboard.css">
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about-us">About us</a>
+        {% if current_user %}
+            <a href="/logout">Sign out</a>
+        {% endif %}
+    </nav>
+</head>
+<body>
+    <div id="container">
+        <h1>Dashboard</h1>
+        <p>you are logged in</p>
+
+        <br>
+        <strong>username:</strong>
+        {{ current_user.username }}<br>
+
+        <strong>email:</strong>
+        {{ current_user.email }}<br>
+
+        <strong>user_id</strong>
+        {{ current_user.user_id }}<br>
+        <br>
+        <form action="/create_pet">
+            <button type="submit">Create Pet</button>
+        </form>
+    </div>
+</body>
+</html>
