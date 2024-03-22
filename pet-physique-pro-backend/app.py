@@ -55,8 +55,10 @@ def login():
     if user and bcrypt.check_password_hash(user.password, password):
         # Store user's ID in session
         session['user_id'] = user.id
+        session['username'] = user.username
+        session['email'] = user.email
         # Redirect to dashboard or profile page
-        return redirect(url_for('home'))
+        return redirect(url_for('dashboard'))
     else:
         return render_template('login.html', error='Invalid username/email or password')
 
@@ -87,6 +89,27 @@ def signin():
 
     else:
         return render_template("signup.html")
+    
+"""sign out"""
+@app.route('/logout')
+def logout():
+    # clear user session
+    session.clear()
+    return redirect(url_for('home'))
+
+"""Dashboard"""
+@app.route('/dashboard')
+def dashboard():
+    # Check if user is logged in
+    if 'user_id' in session:
+        # Retrieve user data from session
+        user_id = session['user_id']
+        username = session['username']
+        email = session['email']
+        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email})
+    else:
+        # Redirect to login page if user is not logged in
+        return redirect(url_for('login'))
 
 """create pet page"""
 @app.route('/create_pet')

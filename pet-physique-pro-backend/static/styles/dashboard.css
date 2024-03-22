@@ -1,0 +1,30 @@
+body {
+    background-color: maroon;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    background-color: maroon;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    border: white 1px solid;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+#container {
+    background-color: rgb(255, 255, 255);
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 15%;
+}
