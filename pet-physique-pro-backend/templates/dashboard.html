@@ -5,32 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../static/styles/dashboard.css">
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about-us">About us</a>
-        {% if current_user %}
-            <a href="/logout">Sign out</a>
-        {% endif %}
-    </nav>
 </head>
 <body>
-    <div id="container">
-        <h1>Dashboard</h1>
-        <p>you are logged in</p>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="#"><img src="../static/images/bell.svg" alt="notification"></a>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#"><img src="../static/images/home.svg" alt="Home"></a></li>
+            <li><a href="#"><img src="../static/images/calander.svg" alt="calander"></a></li>
+            <li><a href="#"><img src="../static/images/statistics.svg" alt="statistics"></a></li>
+            <li><a href="#"><img src="../static/images/question.svg" alt="question"></a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <main class="main">
 
-        <br>
-        <strong>username:</strong>
-        {{ current_user.username }}<br>
-
-        <strong>email:</strong>
-        {{ current_user.email }}<br>
-
-        <strong>user_id</strong>
-        {{ current_user.user_id }}<br>
-        <br>
-        <form action="/create_pet">
-            <button type="submit">Create Pet</button>
-        </form>
+            <!--COL-1 -->
+            <div class="main__col-1">
+  
+              <!-- HEADING -->
+              <div>
+                <h2 class="main__heading"><span style="background: linear-gradient(to bottom, hsl(247, 88%, 70%), hsl(282, 82%, 51%)); box-shadow: 0 2px 12px hsla(247, 88%, 70%, .3)">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </span>{{ current_user.username }}<br></h2>
+                <p class="main__desc">List of all my fury companions that I love so dearly</p>
+                <p class="main__sub"><span>Profile:</span> <span>Pet Physique Pro</span></p>
+              </div>
+  
+              <!-- LIST -->
+              <div class="main__list-heading-wrap">
+                  <h2 class="main__list-heading ss-heading">Your Pets</h2>
+              </div>
+  
+              <ul class="main__list">
+                  {% for pet in user_pets %}
+                  <li class="main__list-item">
+                      <div class="main__list-item-image">
+                          <!-- Assuming you have a pet image stored in the database, you can display it here -->
+                          <img src="{{ pet.image_url }}" alt="Pet Image">
+                      </div>
+                      <div class="main__list-content-wrap">
+                          <p class="main__list-content">{{ pet.name }} - {{ pet.type }}</p>
+                          <p class="main__list-sub">Weight: {{ pet.weight }}kg - Height: {{ pet.height }}cm</p>
+                          <!-- You can include more information about the pet here if needed -->
+                      </div>
+                  </li>
+                  {% endfor %}
+              </ul>
+  
+  
+            <!-- COL-2 -->
+          </main>
+          <button type="button" onclick="window.location.href='/create_pet'">create Pet</button>
     </div>
 </body>
 </html>

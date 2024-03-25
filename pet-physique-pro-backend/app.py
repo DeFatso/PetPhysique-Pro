@@ -97,7 +97,8 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-"""Dashboard"""
+from api.models import Pet
+
 @app.route('/dashboard')
 def dashboard():
     # Check if user is logged in
@@ -106,10 +107,15 @@ def dashboard():
         user_id = session['user_id']
         username = session['username']
         email = session['email']
-        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email})
+        # Query database for pets associated with the user
+        user_pets = Pet.query.filter_by(user_id=user_id).all()
+        # Render dashboard template with user information and pets
+        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email}, user_pets=user_pets)
     else:
         # Redirect to login page if user is not logged in
         return redirect(url_for('login'))
+
+
 
 """create pet page"""
 @app.route('/create_pet')

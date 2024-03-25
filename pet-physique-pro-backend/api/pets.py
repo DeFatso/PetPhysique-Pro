@@ -23,7 +23,7 @@ def create_pet():
     if user_id is None:
         return jsonify({"message": "User ID not provided"}), 400
     
-    """Check if user exist in db"""
+    """Check if user exists in db"""
     user = User.query.get(user_id)
     if user is None:
         return jsonify({"message": "User Not Found"}), 404
@@ -33,13 +33,14 @@ def create_pet():
     height = data['height']
     age = data['age']
 
-    
+    # Create the pet and associate it with the user
     new_pet = Pet(type=type, weight=weight, height=height, age=age, user_id=user_id)
     db.session.add(new_pet)
     db.session.commit()
     
     pet_schema = PetSchema()
     return jsonify(pet_schema.dump(new_pet)), 201
+
 
 """Update pet route"""
 @app_views.route("/pets/<int:pet_id>", methods=["PUT"], strict_slashes=False)

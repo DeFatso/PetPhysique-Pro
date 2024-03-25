@@ -77,15 +77,29 @@ button:hover {
     background-color: #0056b3;
 }
 
-@media only screen and (max-width: 828px) {
-    /* Add your responsive styles here */
+@media (max-width: 768px) {
     body {
-        height: 100%;
-        background-image: url("../images/1-login_image.jpeg");
-        background-size: cover; /* Adjust background size for better fit */
+        background-image: url("../images/0-login_page.jpeg");
+        background-size: cover;
+        align-content: center;
+        background-repeat: no-repeat;
     }
+
     .login-container {
-        width: 90%; /* Adjust login container width for better fit */
+        width: 90%; /* Adjust the width as needed */
     }
-    /* Add more styles as needed */
+
+    #login_flex {
+        padding: 5%; /* Adjust the padding as needed */
+        margin: 0; /* Reset margin */
+    }
+
+    nav {
+        flex-wrap: wrap; /* Allow the navigation links to wrap */
+    }
+
+    nav a {
+        width: 50%; /* Make each navigation link occupy half of the width */
+        text-align: center;
+    }
 }
