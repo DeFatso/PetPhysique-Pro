@@ -18,6 +18,8 @@
             <li><a href="#" id="calendar-icon"><img src="../static/images/calander.svg" alt="calander"></a></li>
             <li><a href="#"><img src="../static/images/statistics.svg" alt="statistics"></a></li>
             <li><a href="#"><img src="../static/images/question.svg" alt="question"></a></li>
+            <li><a href="#" id="user-icon"><img src="../static/images/person.svg" alt="person"></a></li>
+            <li><a href="#" id="pet-icon"><img src="../static/images/dog.svg" alt="pet-icon"></a></li>
             <div id="exit">
                 <li><a href="/logout"><img src="../static/images/sign-out.svg" alt="sign-out"></a></li>
             </div>
@@ -25,63 +27,10 @@
     </div>
     <div class="content">
         <main class="main">
-
-            <div class="main__col-1">
-  
-              <div>
-                <h2 class="main__heading"><span style="background: linear-gradient(to bottom, hsl(247, 88%, 70%), hsl(282, 82%, 51%)); box-shadow: 0 2px 12px hsla(247, 88%, 70%, .3)">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </span>{{ current_user.username }}<br></h2>
-                <p class="main__desc">List of all my fury companions that I love so dearly</p>
-                <p class="main__sub"><span>Profile:</span> <span>Pet Physique Pro</span></p>
-              </div>
-  
-              <div class="main__list-heading-wrap">
-                  <h2 class="main__list-heading ss-heading">Your Pets</h2>
-              </div>
-  
-              <ul class="main__list">
-                  {% for pet in user_pets %}
-                  <li class="main__list-item">
-                      <div class="main__list-item-image">
-                          <img src="{{ pet.image_url }}" alt="Pet Image">
-                      </div>
-                      <div class="main__list-content-wrap">
-                          <p class="main__list-content">{{ pet.name }} - {{ pet.type }}</p>
-                          <p class="main__list-sub">Weight: {{ pet.weight }}kg - Height: {{ pet.height }}cm</p>
-                      </div>
-                  </li>
-                  {% endfor %}
-              </ul>
-              <button type="button" onclick="window.location.href='/create_pet'">create Pet</button>
-            </main>
+            <h1>Dashboard</h1>
+        </main>
     </div>
+    <script src="../static/js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to replace content with FullCalendar
-            function showCalendar() {
-                var mainContent = document.querySelector('.main');
-                mainContent.innerHTML = '<div id="calendar"></div>';
-    
-                var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    // Configure options here
-                    initialView: 'dayGridMonth', // Display the calendar in month view by default
-                    height: '1000px',
-                    aspect_ratio: 1.1
-                });
-    
-                calendar.render();
-            }
-    
-            // Event listener for clicking on the calendar icon
-            document.getElementById('calendar-icon').addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                showCalendar(); // Call the function to display the calendar
-            });
-        });
-    </script>    
 </body>
 </html>

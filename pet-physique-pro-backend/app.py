@@ -7,6 +7,8 @@ from api.blueprint import app_views
 import os
 from flask_cors import CORS  # Import the CORS module
 from flask_bcrypt import Bcrypt  # Import bcrypt for pswd hashing
+from flask import jsonify
+
 
 
 app = Flask(__name__)
@@ -115,7 +117,32 @@ def dashboard():
         # Redirect to login page if user is not logged in
         return redirect(url_for('login'))
 
+# Route to handle requests for user information
+@app.route('/user-info')
+def get_user_info():
+    # Retrieve user information from session or database
+    user_info = {
+        'username': session.get('username'),
+        'email': session.get('email'),
+        'user_id': session.get('user_id')
+    }
+    # Return user information as JSON response
+    return jsonify(user_info)
 
+@app.route('/pet-info')
+def get_pet_info():
+    # Retrieve pet information from the database
+    pets = Pet.query.all()
+    # Convert pet objects to a list of dictionaries
+    pet_info = [{
+        'id': pet.id,
+        'type': pet.type,
+        'age': pet.age,
+        'height': pet.height,
+        'weight': pet.weight
+    } for pet in pets]
+    # Return pet information as JSON response
+    return jsonify(pet_info)
 
 """create pet page"""
 @app.route('/create_pet')
