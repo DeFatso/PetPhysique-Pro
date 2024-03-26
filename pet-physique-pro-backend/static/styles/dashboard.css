@@ -7,6 +7,16 @@ body, html {
     font-family: Arial, sans-serif;
 }
 
+.content {
+    background-color: rgba(128, 0, 0, 0.376);
+    margin-top: 50px;
+    margin-right: 10px;
+}
+
+#exit {
+    margin-top: 900%;
+}
+
 .sidebar {
     width: 70px;
     height: 100%;
