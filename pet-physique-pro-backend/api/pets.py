@@ -45,6 +45,7 @@ def create_pet():
 """Update pet route"""
 @app_views.route("/pets/<int:pet_id>", methods=["PUT"], strict_slashes=False)
 def update_pet(pet_id):
+    print('Update request received for pet ID:', pet_id)
     pet = Pet.query.get(pet_id)
     if not pet:
         return jsonify({"error": "Pet not found"}), 404
@@ -66,6 +67,7 @@ def update_pet(pet_id):
 """Delete pet route"""
 @app_views.route("/pets/<int:pet_id>", methods=["DELETE"], strict_slashes=False)
 def delete_pet(pet_id):
+    print('Delete request received for pet ID:', pet_id)
     pet = Pet.query.get(pet_id)
     if not pet:
         return jsonify({"error": "Pet not found"}), 404

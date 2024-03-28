@@ -154,6 +154,10 @@ def create_pet_page():
 def about_us():
     return render_template('about_us.html')
 
+@app.route('/update_pet/<int:pet_id>')
+def update_pet_page(pet_id):
+    return render_template('update_pet.html', pet_id=pet_id)
+
 # Run the Flask app
 if __name__ == '__main__':
      # Importing db here ensures it's imported within the application context.
