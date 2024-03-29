@@ -34,13 +34,8 @@ def create_pet():
     height = data['height']
     age = data['age']
 
-<<<<<<< HEAD
     
     new_pet = Pet(name=name, type=type, weight=weight, height=height, age=age, user_id=user_id)
-=======
-    # Create the pet and associate it with the user
-    new_pet = Pet(type=type, weight=weight, height=height, age=age, user_id=user_id)
->>>>>>> ccf72539e7e25c2a5c8fead21c1f6eef5db37208
     db.session.add(new_pet)
     db.session.commit()
     
