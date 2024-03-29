@@ -16,8 +16,8 @@ def get_pets():
 def create_pet():
     data = request.json
 
-    if 'type' not in data or 'weight' not in data or 'height' not in data or 'age' not in data or 'user_id' not in data:
-        return jsonify({"error": "Missing type or weight or height or age or user"}), 400
+    if 'type' not in data or 'weight' not in data or 'height' not in data or 'age' not in data or 'user_id' not in data or 'name' not in data:
+        return jsonify({"error": "Missing name or type or weight or height or age or user"}), 400
     
     user_id = data.get("user_id")
     if user_id is None:
@@ -28,13 +28,14 @@ def create_pet():
     if user is None:
         return jsonify({"message": "User Not Found"}), 404
     
+    name = data['name']
     type = data['type']
     weight = data['weight']
     height = data['height']
     age = data['age']
 
     
-    new_pet = Pet(type=type, weight=weight, height=height, age=age, user_id=user_id)
+    new_pet = Pet(name=name, type=type, weight=weight, height=height, age=age, user_id=user_id)
     db.session.add(new_pet)
     db.session.commit()
     
@@ -48,8 +49,10 @@ def update_pet(pet_id):
     if not pet:
         return jsonify({"error": "Pet not found"}), 404
     data = request.json
-    if "type" not in data and "weight" not in data and "height" not in data and "age" not in data:
+    if "type" not in data and "weight" not in data and "height" not in data and "age" not in data and "name" not in data:
         return jsonify({"error": "No data provided for update"}), 400
+    if "name" in data:
+        pet.name = data["name"]
     if "type" in data:
         pet.type = data["type"]
     if "weight" in data:

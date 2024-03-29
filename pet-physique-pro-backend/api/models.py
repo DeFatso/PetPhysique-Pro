@@ -6,6 +6,7 @@ ma = Marshmallow()
 """Define Pet model"""
 class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
     type = db.Column(db.String(50), nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     height = db.Column(db.Float, nullable=False)

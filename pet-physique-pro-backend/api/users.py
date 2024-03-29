@@ -1,8 +1,10 @@
 from flask import request, jsonify
 from api.db import db  # Import Database setup
+from flask_bcrypt import Bcrypt
 from api.models import UserSchema, PetSchema, User, Pet
 from api.blueprint import app_views
 
+bcrypt = Bcrypt()
 
 """Get all recorded users"""
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
@@ -24,7 +26,7 @@ def get_user(user_id):
 
 
 """Create a new user"""
-@app_views.route("/users", methods=["POST"], strict_slashes=False)
+@app_views.route("/signup", methods=["POST"], strict_slashes=False)
 def create_user():
     data = request.json
     if 'username' not in data or 'email' not in data:
@@ -34,7 +36,12 @@ def create_user():
     email = data['email']
     password = data['password']
 
-    new_user = User(username=username, email=email, password=password)
+    """Check if email already exist in the database"""
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"error": "Email already exist, Login instead"})
+
+    new_user = User(username=username, email=email, password=bcrypt.generate_password_hash(password).decode('utf-8'))
     db.session.add(new_user)
     db.session.commit()
 
@@ -42,6 +49,7 @@ def create_user():
     if 'pets' in data:
         pets_data = data['pets']
         for pet_data in pets_data:
+            name = pet_data.get('name')
             type = pet_data.get('type')
             weight = pet_data.get('weight')
             height = pet_data.get('height')
@@ -54,6 +62,25 @@ def create_user():
 
     user_schema = UserSchema()
     return jsonify(user_schema.dump(new_user)), 201
+
+
+"""Login existingUser"""
+@app_views.route("/login", methods=["POST"], strict_slashes=False)
+def login_user():
+    data = request.json
+    
+    if "email" not in data or "password" not in data:
+        return jsonify({"error": "Missing email or password"}), 400
+    
+    email = data["email"]
+    password = data["password"]
+    """Fetch user by email from database"""
+    user = User.query.filter_by(email=email).first()
+    if user and bcrypt.check_password_hash(user.password, password):
+        user_schema = UserSchema()
+        return jsonify(user_schema.dump(user)), 200
+    else:
+        return jsonify({"error": "Invalid email or password"}, 401)
 
 
 """Update an existing user"""
