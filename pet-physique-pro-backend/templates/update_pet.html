@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Pet</title>
+    <!-- Add any necessary stylesheets or scripts here -->
+    <link rel="stylesheet" href="../static/styles/update_pet.css">
+    <!--
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about_us">About us</a>
+        <a href="/login">Sign in</a>
+        <a href="/sign-up">Sign up</a>
+    </nav>
+    -->
+   
+</head>
+<body>
+    <h1>Update Pet Details</h1>
+    <form id="updatePetForm">
+        <!-- Input fields for pet details -->
+        <div>
+            <label for="weight">Weight:</label>
+            <input type="number" id="weight" name="weight">
+        </div>
+        <div>
+            <label for="height">Height:</label>
+            <input type="number" id="height" name="height">
+        </div>
+        <!-- Include a hidden input field to store the pet ID -->
+        <input type="hidden" id="petId" name="petId">
+
+        <!-- Button to submit the form -->
+        <button type="submit">Update Pet</button>
+    </form>
+
+    <script>
+        // Add an event listener to the form submission
+        document.getElementById('updatePetForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Retrieve the form data
+            const formData = new FormData(this);
+
+            // Send a PUT request to update the pet details
+            fetch('/pets/' + formData.get('petId'), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: formData.get('type'),
+                    weight: formData.get('weight'),
+                    height: formData.get('height'),
+                    age: formData.get('age')
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to the dashboard or pet info page upon successful update
+                    window.location.href = '/dashboard';
+                } else {
+                    // Handle errors
+                    console.error('Failed to update pet:', response.statusText);
+                    // Display an error message to the user
+                    alert('Failed to update pet. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating pet:', error);
+                // Display an error message to the user
+                alert('An unexpected error occurred. Please try again later.');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -13,7 +13,7 @@ nav {
     padding-bottom: 10px;
     overflow: hidden;
 }
-.login-container {
+.sign_up_container {
     background-color: rgba(128, 0, 0, 0.352);
     padding: 15px;
     border-radius: 5px;
@@ -21,7 +21,7 @@ nav {
     width: 50%;
 }
 
-#login_flex {
+#sign_up_flex {
     display: flex;
     height: 100%;
     padding-left: 5%;
@@ -47,7 +47,7 @@ nav a {
     margin-bottom: 15px;
 }
 
-#login_flex form {
+#sign_up_flex form {
     padding: 10%;
 }
 
@@ -85,7 +85,7 @@ button:hover {
         background-repeat: no-repeat;
     }
 
-    .login-container {
+    .sign_up_container {
         width: 90%; /* Adjust the width as needed */
     }
 

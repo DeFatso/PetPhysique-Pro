@@ -7,6 +7,8 @@ from api.blueprint import app_views
 import os
 from flask_cors import CORS  # Import the CORS module
 from flask_bcrypt import Bcrypt  # Import bcrypt for pswd hashing
+from flask import jsonify
+
 
 
 app = Flask(__name__)
@@ -97,7 +99,8 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-"""Dashboard"""
+from api.models import Pet
+
 @app.route('/dashboard')
 def dashboard():
     # Check if user is logged in
@@ -106,10 +109,40 @@ def dashboard():
         user_id = session['user_id']
         username = session['username']
         email = session['email']
-        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email})
+        # Query database for pets associated with the user
+        user_pets = Pet.query.filter_by(user_id=user_id).all()
+        # Render dashboard template with user information and pets
+        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email}, user_pets=user_pets)
     else:
         # Redirect to login page if user is not logged in
         return redirect(url_for('login'))
+
+# Route to handle requests for user information
+@app.route('/user-info')
+def get_user_info():
+    # Retrieve user information from session or database
+    user_info = {
+        'username': session.get('username'),
+        'email': session.get('email'),
+        'user_id': session.get('user_id')
+    }
+    # Return user information as JSON response
+    return jsonify(user_info)
+
+@app.route('/pet-info')
+def get_pet_info():
+    # Retrieve pet information from the database
+    pets = Pet.query.all()
+    # Convert pet objects to a list of dictionaries
+    pet_info = [{
+        'id': pet.id,
+        'type': pet.type,
+        'age': pet.age,
+        'height': pet.height,
+        'weight': pet.weight
+    } for pet in pets]
+    # Return pet information as JSON response
+    return jsonify(pet_info)
 
 """create pet page"""
 @app.route('/create_pet')
@@ -120,6 +153,10 @@ def create_pet_page():
 @app.route('/about-us')
 def about_us():
     return render_template('about_us.html')
+
+@app.route('/update_pet/<int:pet_id>')
+def update_pet_page(pet_id):
+    return render_template('update_pet.html', pet_id=pet_id)
 
 # Run the Flask app
 if __name__ == '__main__':

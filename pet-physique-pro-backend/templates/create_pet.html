@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Pet</title>
     <link rel="stylesheet" href="../static/styles/create_pet.css">
+    <link rel="icon" type="Image/png" href="../static/images/icon.png">
     <nav>
         <a href="/">Home</a>
         <a href="">About us</a>
@@ -15,24 +16,26 @@
 <body>
     <div id="body">
         <h1>Create New Pet</h1>
-        <form id="createPetForm">
+
+
+        <form id="createPetForm" action="api/pets" method="POST">
             <label for="type">Type:&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <select id="type" name="type" required>
-                <option value="dog">Basenji</option>
-                <option value="dog">Boerboel</option>
-                <option value="dog">Africanis</option>
-                <option value="dog">Bulldog</option>
-                <option value="dog">Golden Retriever</option>
-                <option value="dog">Dobermann</option>
-                <option value="dog">German Shepherd</option>
-                <option value="cat">Maine Coon</option>
-                <option value="cat">Birman</option>
-                <option value="cat">Manx</option>
-                <option value="cat">Ocicat</option>
-                <option value="cat">Sphynx</option>
-                <option value="cat">Russian Blue</option>
-                <option value="cat">Somali</option>
-                <option value="dog">Rottweiler</option>
+                <option value="Basenji">Basenji</option>
+                <option value="Boerboel">Boerboel</option>
+                <option value="Africanis">Africanis</option>
+                <option value="Bulldog">Bulldog</option>
+                <option value="Golden Retriever">Golden Retriever</option>
+                <option value="Dobermann">Dobermann</option>
+                <option value="German Shepherd">German Shepherd</option>
+                <option value="Maine Coon">Maine Coon</option>
+                <option value="Birman">Birman</option>
+                <option value="Manx">Manx</option>
+                <option value="Ocicat">Ocicat</option>
+                <option value="Sphynx">Sphynx</option>
+                <option value="Russian Blue">Russian Blue</option>
+                <option value="Somali">Somali</option>
+                <option value="Rottweiler">Rottweiler</option>
                 <!-- Add more options as needed -->
             </select><br><br>
 
@@ -42,8 +45,11 @@
             <label for="height">Height:</label>
             <input type="number" id="height" name="height" step="0.01" required><br><br>
 
-            <label for="pet_name">Pet Name:</label>
-            <input type="text"><br><br>
+            <label for="age">age:</label>
+            <input type="number" id="age" name="age" step="0.01" required><br><br>
+
+            <label for="user_id">user_id:</label>
+            <input type="number" id="user_id" name="user_id" step="0.01" required><br><br>
 
             <button type="submit">Create Pet</button>
         </form>
@@ -59,7 +65,7 @@
             async function createPet() {
                 const form = document.getElementById("createPetForm");
                 const formData = new FormData(form);
-                const response = await fetch("/pets", {
+                const response = await fetch("api/pets", {
                     method: "POST",
                     body: JSON.stringify(Object.fromEntries(formData)),
                     headers: {

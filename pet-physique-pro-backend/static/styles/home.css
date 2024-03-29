@@ -4,6 +4,11 @@ body {
     align-content: center;
 }
 
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: url("../images/vertical_home.jpeg");
+    }
+}
 nav {
     display: flex;
     width: 100%;
@@ -13,26 +18,50 @@ nav {
     overflow: hidden;
 }
 
-#home_flex {
-    display: flex;
-    width: 80%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
+.btn-maroon {
+    background-color: maroon;
+    color: white; 
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
+#buttons {
+    margin-top: 30px; 
+}
+
+@media (max-width: 767px) {
+    #buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+    }
+
+    #buttons .btn {
+        margin: 5px; 
+    }
+}
+
+
 #main {
-    font-size: xx-large;
     width: 50%;
     padding-top: 20%;
     padding-bottom: 20%;
 }
 
-#text {
-    padding-top: 16%;
-    padding-bottom: 20%;
-    width: 50%;
+#home_flex {
+    margin-left: 20% ;
+    margin-right: 20%;
+    margin-top: 5%;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+@media only screen and (max-width: 600px) {
+    #text {
+        font-size: 16px; 
+        line-height: 1.4;
+        font-weight: lighter;
+    }
 }
 
 nav a {
@@ -42,4 +71,15 @@ nav a {
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
+}
+
+#images {
+    display: flex;
+    margin-top: 5%;
+    background-color: maroon;
+    margin-left: 10%;
+    margin-right: 10%;
+    justify-content: space-around;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

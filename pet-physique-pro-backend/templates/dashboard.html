@@ -5,32 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../static/styles/dashboard.css">
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about-us">About us</a>
-        {% if current_user %}
-            <a href="/logout">Sign out</a>
-        {% endif %}
-    </nav>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css" rel="stylesheet" />
+    <link rel="icon" type="Image/png" href="../static/images/icon.png">
 </head>
 <body>
-    <div id="container">
-        <h1>Dashboard</h1>
-        <p>you are logged in</p>
-
-        <br>
-        <strong>username:</strong>
-        {{ current_user.username }}<br>
-
-        <strong>email:</strong>
-        {{ current_user.email }}<br>
-
-        <strong>user_id</strong>
-        {{ current_user.user_id }}<br>
-        <br>
-        <form action="/create_pet">
-            <button type="submit">Create Pet</button>
-        </form>
+    <script src="../static/js/dashboard.js"></script>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="#"><img src="../static/images/bell.svg" alt="notification"></a>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/dashboard"><img src="../static/images/home.svg" alt="Home"></a></li>
+            <li><a href="#" id="calendar-icon"><img src="../static/images/calander.svg" alt="calander"></a></li>
+            <li><a href="#"><img src="../static/images/statistics.svg" alt="statistics"></a></li>
+            <li><a href="#"><img src="../static/images/question.svg" alt="question"></a></li>
+            <li><a href="#" id="user-icon"><img src="../static/images/person.svg" alt="person"></a></li>
+            <li><a href="#" id="pet-icon"><img src="../static/images/dog.svg" alt="pet-icon"></a></li>
+            <div id="exit">
+                <li><a href="/logout"><img src="../static/images/sign-out.svg" alt="sign-out"></a></li>
+            </div>
+        </ul>
     </div>
+    <div class="content">
+        <main class="main">
+            <h1>Welcome</h1>
+            <p>Use the Bar on the Left sidebar to view your info and a pet info</p>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
 </body>
 </html>
