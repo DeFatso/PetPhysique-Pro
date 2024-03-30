@@ -26,55 +26,81 @@
         </div>
         <div>
             <label for="weight">Weight:</label>
-            <input type="number" id="weight" name="weight">
+            <input type="number" id="weight" name="weight" oninput="calculateBMI()">
         </div>
         <div>
             <label for="height">Height:</label>
-            <input type="number" id="height" name="height">
+            <input type="number" id="height" name="height" oninput="calculateBMI()">
         </div>
         <!-- Include a hidden input field to store the pet ID -->
         <input type="hidden" id="petId" name="petId">
+
+        <!-- Display area for BMI -->
+        <div>
+            <label for="bmi">BMI:</label>
+            <span id="bmi"></span>
+        </div>
 
         <!-- Button to submit the form -->
         <button type="submit">Update Pet</button>
     </form>
 
     <script>
-        // Add an event listener to the form submission
-        document.getElementById('updatePetForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
+    // Function to calculate BMI
+    function calculateBMI() {
+        // Retrieve weight and height values
+        const weight = document.getElementById('weight').value;
+        const height = document.getElementById('height').value;
 
-            // Retrieve the form data
-            const formData = new FormData(this);
+        // Check if weight and height are valid numbers
+        if (!isNaN(weight) && !isNaN(height) && weight > 0 && height > 0) {
+            // Calculate BMI
+            const bmi = weight / ((height/100) * (height/100));
+            // Display BMI
+            document.getElementById('bmi').textContent = bmi.toFixed(2);
+        } else {
+            // Clear BMI if invalid values are entered
+            document.getElementById('bmi').textContent = '';
+        }
+    }
 
-            // Send a PUT request to update the pet details
-            fetch('api/pets/<int:pet_id>' + formData.get('petId'), {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    weight: formData.get('weight'),
-                    height: formData.get('height'),
-                })
+    // Add an event listener to the form submission
+    document.getElementById('updatePetForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Retrieve the form data
+        const formData = new FormData(this);
+
+        // Send a PUT request to update the pet details
+        fetch('api/pets/<int:pet_id>' + formData.get('petId'), {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                weight: formData.get('weight'),
+                height: formData.get('height'),
             })
-            .then(response => {
-                if (response.ok) {
-                    // Redirect to the dashboard or pet info page upon successful update
-                    window.location.href = '/dashboard';
-                } else {
-                    // Handle errors
-                    console.error('Failed to update pet:', response.statusText);
-                    // Display an error message to the user
-                    alert('Failed to update pet. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error updating pet:', error);
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect to the dashboard or pet info page upon successful update
+                window.location.href = '/dashboard';
+            } else {
+                // Handle errors
+                console.error('Failed to update pet:', response.statusText);
                 // Display an error message to the user
-                alert('An unexpected error occurred. Please try again later.');
-            });
+                alert('Failed to update pet. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating pet:', error);
+            // Display an error message to the user
+            alert('An unexpected error occurred. Please try again later.');
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
+

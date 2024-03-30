@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function showPetInfo() {
+    function showPetInfo(userId) {
         console.log('showPetInfo function called');
-        fetch('/pet-info')
+        fetch(`api/users/2/pets`)
         .then(response => response.json())
         .then(data => {
             var mainContent = document.querySelector('.main');
@@ -92,6 +92,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error fetching update_pet template:', error);
             });
     }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to calculate BMI
+        function calculateBMI(weight, height) {
+            // Check if weight and height are valid numbers
+            if (!isNaN(weight) && !isNaN(height) && weight > 0 && height > 0) {
+                // Calculate BMI
+                const bmi = weight / ((height/100) * (height/100));
+                return bmi.toFixed(2);
+            } else {
+                return ''; // Return empty string if weight or height is invalid
+            }
+        }
+    
+        // Rest of your code goes here...
+    });
     
     // Attach updatePet function to the window object
     window.updatePet = updatePet;

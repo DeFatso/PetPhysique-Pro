@@ -68,21 +68,17 @@ def create_user():
 @app_views.route("/login", methods=["POST"], strict_slashes=False)
 def login_user():
     data = request.json
-    
+
     if "email" not in data or "password" not in data:
         return jsonify({"error": "Missing email or password"}), 400
-    
+
     email = data["email"]
     password = data["password"]
     """Fetch user by email from database"""
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password):
-        # Create a session for the user
-        session['user_id'] = user.id
-        session['username'] = user.username
-        session['email'] = user.email
-        # Redirect the user to the dashboard
-        return redirect(url_for('dashboard'))
+        user_schema = UserSchema()
+        return jsonify(user_schema.dump(user)), 200
     else:
         return jsonify({"error": "Invalid email or password"}, 401)
 
