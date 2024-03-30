@@ -66,6 +66,12 @@ label {
     height: 25px;
 }
 
+#name {
+    margin-left: 3%;
+    width: 70%;
+    height: 25px;
+}
+
 #weight {
     width: 70%;
     height: 25px;

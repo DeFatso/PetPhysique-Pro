@@ -32,22 +32,25 @@
     </div>
     
     <script>
-    function login() {
+        function login() {
         var form = document.getElementById("login-form");
         var formData = new FormData(form);
         var jsonObject = {};
         formData.forEach(function(value, key){
             jsonObject[key] = value;
         });
+
         var jsonData = JSON.stringify(jsonObject);
-    
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/api/login");
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onload = function () {
             if (xhr.status === 200) {
                 // Handle successful login response
-                console.log(xhr.responseText);
+                console.log('Successfully logged in');
+                console.log('Redirecting to dashboard');
+                window.location.href = '/dashboard';
             } else {
                 // Handle login error response
                 console.error(xhr.responseText);
@@ -55,6 +58,7 @@
         };
         xhr.send(jsonData);
     }
+
     </script>
         
 </body>

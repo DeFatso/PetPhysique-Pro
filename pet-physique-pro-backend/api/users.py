@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import redirect, request, jsonify, session, url_for
 from api.db import db  # Import Database setup
 from flask_bcrypt import Bcrypt
 from api.models import UserSchema, PetSchema, User, Pet
@@ -77,10 +77,15 @@ def login_user():
     """Fetch user by email from database"""
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password):
-        user_schema = UserSchema()
-        return jsonify(user_schema.dump(user)), 200
+        # Create a session for the user
+        session['user_id'] = user.id
+        session['username'] = user.username
+        session['email'] = user.email
+        # Redirect the user to the dashboard
+        return redirect(url_for('dashboard'))
     else:
         return jsonify({"error": "Invalid email or password"}, 401)
+
 
 
 """Update an existing user"""

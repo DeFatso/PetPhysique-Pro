@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             data.forEach(pet => {
                 petInfoHTML += '<div>' +
                                 '<img src="../static/images/dog.svg" alt="Default Pet Picture">' +
-                                '<p> Pet name: ' + pet.name + '</p>' +
+                                '<p> Name: ' + pet.name + '</p>' +
                                 '<p>Weight: ' + pet.weight + '</p>' +
                                 '<p>Height: ' + pet.height + '</p>' +
                                 '<button type="button" onclick="deletePet(' + pet.id + ')">Delete</button>' +

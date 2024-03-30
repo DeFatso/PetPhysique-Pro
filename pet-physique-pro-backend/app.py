@@ -42,27 +42,32 @@ def home():
 """sign in"""
 @app.route('/login', methods=["POST", "GET"])
 def login():
-    # get user data from login form
-    username = request.form.get('username')
-    password = request.form.get('password')
+    if request.method == 'POST':
+        # get user data from login form
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    # Check if username/email and password are provided
-    if not username or not password:
-        return render_template("login.html", error='Missing username/email or password')
+        # Check if username/email and password are provided
+        if not username or not password:
+            return render_template("login.html", error='Missing username/email or password')
 
-    # Query the database for the user
-    user = User.query.filter((User.username == username) | (User.email == username)).first()
+        # Query the database for the user
+        user = User.query.filter((User.username == username) | (User.email == username)).first()
 
-    # Check if user exists and password is correct
-    if user and bcrypt.check_password_hash(user.password, password):
-        # Store user's ID in session
-        session['user_id'] = user.id
-        session['username'] = user.username
-        session['email'] = user.email
-        # Redirect to dashboard or profile page
-        return redirect(url_for('dashboard'))
-    else:
-        return render_template('login.html', error='Invalid username/email or password')
+        # Check if user exists and password is correct
+        if user and bcrypt.check_password_hash(user.password, password):
+            # Store user's ID in session
+            session['user_id'] = user.id
+            session['username'] = user.username
+            session['email'] = user.email
+            # Redirect to dashboard or profile page
+            return redirect(url_for('dashboard.html'))
+        else:
+            return render_template('login.html', error='Invalid username/email or password')
+
+    # If method is GET, render the login form
+    return render_template('login.html')
+
 
 
 """sign up"""
@@ -135,7 +140,8 @@ def get_pet_info():
     pets = Pet.query.all()
     # Convert pet objects to a list of dictionaries
     pet_info = [{
-        'id': pet.id,
+        'name': pet.name,
+        'id': session.get('user_id'),
         'type': pet.type,
         'age': pet.age,
         'height': pet.height,

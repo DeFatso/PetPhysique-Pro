@@ -21,6 +21,10 @@
     <form id="updatePetForm">
         <!-- Input fields for pet details -->
         <div>
+            <label for="pet_id">Pet ID:</label>
+            <input type="number" id="pet_id" name="pet_id">
+        </div>
+        <div>
             <label for="weight">Weight:</label>
             <input type="number" id="weight" name="weight">
         </div>
@@ -44,16 +48,14 @@
             const formData = new FormData(this);
 
             // Send a PUT request to update the pet details
-            fetch('/pets/' + formData.get('petId'), {
+            fetch('api/pets/<int:pet_id>' + formData.get('petId'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    type: formData.get('type'),
                     weight: formData.get('weight'),
                     height: formData.get('height'),
-                    age: formData.get('age')
                 })
             })
             .then(response => {
