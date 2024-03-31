@@ -44,29 +44,30 @@ def home():
 def login():
     if request.method == 'POST':
         # get user data from login form
-        username = request.form.get('username')
+        email = request.form.get('email')
         password = request.form.get('password')
 
-        # Check if username/email and password are provided
-        if not username or not password:
+        # Check if email/email and password are provided
+        if not email or not password:
             return render_template("login.html", error='Missing username/email or password')
 
         # Query the database for the user
-        user = User.query.filter((User.username == username) | (User.email == username)).first()
+        user = User.query.filter((User.password == password) | (User.email == email)).first()
 
         # Check if user exists and password is correct
         if user and bcrypt.check_password_hash(user.password, password):
-            # Store user's ID in session
+            # Store user's information in session
             session['user_id'] = user.id
-            session['username'] = user.username
+            session['username'] = user.username  # Store username in session
             session['email'] = user.email
             # Redirect to dashboard or profile page
-            return redirect(url_for('dashboard.html'))
+            return redirect(url_for('dashboard'))
         else:
             return render_template('login.html', error='Invalid username/email or password')
 
     # If method is GET, render the login form
     return render_template('login.html')
+
 
 
 
@@ -106,11 +107,10 @@ def logout():
 
 from api.models import Pet
 
+"""
 @app.route('/dashboard')
 def dashboard():
-    # Check if user is logged in
     if 'user_id' in session:
-        # Retrieve user data from session
         user_id = session['user_id']
         username = session['username']
         email = session['email']
@@ -121,6 +121,18 @@ def dashboard():
     else:
         # Redirect to login page if user is not logged in
         return redirect(url_for('login'))
+"""
+@app.route('/dashboard')
+def dashboard():
+    user_id = session.get('user_id')  # Get the user_id from the session
+    username = session.get('username')
+    email = session.get('email')
+    # Assuming you have user_pets defined somewhere
+    user_pets = ...
+
+    # Pass user_id to the template
+    return render_template("dashboard.html", user_id=user_id, username=username, email=email, user_pets=user_pets)
+
 
 # Route to handle requests for user information
 @app.route('/user-info')

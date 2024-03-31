@@ -30,29 +30,40 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function showPetInfo(userId) {
+    function showPetInfo(user_id) {
         console.log('showPetInfo function called');
-        fetch(`api/users/2/pets`)
-        .then(response => response.json())
-        .then(data => {
-            var mainContent = document.querySelector('.main');
-            var petInfoHTML = '<div id="pet-info">';
-            
-            data.forEach(pet => {
-                petInfoHTML += '<div>' +
-                                '<img src="../static/images/dog.svg" alt="Default Pet Picture">' +
-                                '<p> Name: ' + pet.name + '</p>' +
-                                '<p>Weight: ' + pet.weight + '</p>' +
-                                '<p>Height: ' + pet.height + '</p>' +
-                                '<button type="button" onclick="deletePet(' + pet.id + ')">Delete</button>' +
-                                '<button type="button" onclick="updatePet(' + pet.id + ')">Update</button>' +
-                                '</div>';
-            });
-            petInfoHTML += '<button type="button" onclick="window.location.href=\'/create_pet\'">Create Pet</button>';
-            petInfoHTML += '</div>';
-            mainContent.innerHTML = petInfoHTML;
-        });
+        if (user_id) { // Check if user_id is not undefined
+            fetch(`/api/users/${user_id}/pets`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                var mainContent = document.querySelector('.main');
+                var petInfoHTML = '<div id="pet-info">';
+                
+                data.forEach(pet => {
+                    petInfoHTML += '<div>' +
+                                    '<img src="../static/images/dog.svg" alt="Default Pet Picture">' +
+                                    '<p> Name: ' + pet.name + '</p>' +
+                                    '<p>Weight: ' + pet.weight + '</p>' +
+                                    '<p>Height: ' + pet.height + '</p>' +
+                                    '<button type="button" onclick="deletePet(' + pet.id + ')">Delete</button>' +
+                                    '<button type="button" onclick="updatePet(' + pet.id + ')">Update</button>' +
+                                    '</div>';
+                });
+                petInfoHTML += '<button type="button" onclick="window.location.href=\'/create_pet\'">Create Pet</button>';
+                petInfoHTML += '</div>';
+                mainContent.innerHTML = petInfoHTML;
+            })
+            .catch(error => console.error('Error fetching pet information:', error));
+        } else {
+            console.error('User ID is undefined');
+        }
     }
+    
     
     // Define deletePet function and attach it to the window object
     window.deletePet = function(petId) {
