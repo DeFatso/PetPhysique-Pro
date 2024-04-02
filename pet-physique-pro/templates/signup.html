@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetPhysique Pro</title>
+    <link rel="stylesheet" href="../static/styles/sign_up.css">
+    <link rel="icon" type="Image/png" href="../static/images/icon.png">
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/about-us">About us</a>
+        <a href="/login">Sign in</a>
+        <!--<a href="/sign-up">Sign up</a>-->
+    </nav>
+</head>
+<body>
+    <div id="sign_up_flex">
+        <div class="sign_up_container">
+            <form action="/api/signup" method="POST" id="signup-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form data
+            var formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            // Send form data to the server
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Set Content-Type header to 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create user');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful response
+                console.log('User created:', data);
+                // Optionally, redirect the user to another page
+                window.location.href = '/dashboard';
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error creating user:', error.message);
+                // Optionally, display an error message to the user
+                // For example: document.getElementById('error-message').textContent = error.message;
+            });
+        });
+    </script>
+</body>
+</html>
