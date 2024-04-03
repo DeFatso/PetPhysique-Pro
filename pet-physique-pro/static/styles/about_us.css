@@ -22,6 +22,10 @@ nav {
     overflow: hidden;
 }
 
+nav img {
+    height: 30px;
+}
+
 nav a {
     float: left;
     display: block;

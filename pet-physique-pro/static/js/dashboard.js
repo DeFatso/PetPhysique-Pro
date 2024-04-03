@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function showPetInfo(user_id) {
+    /**function showPetInfo(user_id) {
         console.log('showPetInfo function called');
         if (user_id) { // Check if user_id is not undefined
             fetch(`/api/users/${user_id}/pets`)
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('User ID is undefined');
         }
     }
-    
+    */
     
     // Define deletePet function and attach it to the window object
     window.deletePet = function(petId) {
