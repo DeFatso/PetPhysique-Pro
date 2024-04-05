@@ -5,9 +5,12 @@ from api.models import ma
 from api.models import User
 from api.blueprint import app_views
 import os
+from api.models import Pet
+import requests
 from flask_cors import CORS  # Import the CORS module
 from flask_bcrypt import Bcrypt  # Import bcrypt for pswd hashing
 from flask import jsonify
+from api.users import get_user_pets
 
 
 
@@ -109,23 +112,7 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-from api.models import Pet
-
-"""
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        user_id = session['user_id']
-        username = session['username']
-        email = session['email']
-        # Query database for pets associated with the user
-        user_pets = Pet.query.filter_by(user_id=user_id).all()
-        # Render dashboard template with user information and pets
-        return render_template("dashboard.html", current_user={'user_id': user_id, 'username': username, 'email': email}, user_pets=user_pets)
-    else:
-        # Redirect to login page if user is not logged in
-        return redirect(url_for('login'))
-"""
+"""dashboard"""
 @app.route('/dashboard')
 def dashboard():
     user_id = session.get('user_id')  # Get the user_id from the session
@@ -138,52 +125,80 @@ def dashboard():
     return render_template("dashboard.html", user_id=user_id, username=username, email=email, user_pets=user_pets)
 
 
-# Route to handle requests for user information
-@app.route('/user-info')
-def get_user_info():
-    # Retrieve user information from session or database
-    user_info = {
-        'username': session.get('username'),
-        'email': session.get('email'),
-        'user_id': session.get('user_id')
-    }
-    # Return user information as JSON response
-    return jsonify(user_info)
-
-@app.route('/pet-info')
-def get_pet_info():
-    # Retrieve pet information from the database
-    pets = Pet.query.all()
-    # Convert pet objects to a list of dictionaries
-    pet_info = [{
-        'name': pet.name,
-        'id': session.get('user_id'),
-        'type': pet.type,
-        'age': pet.age,
-        'height': pet.height,
-        'weight': pet.weight
-    } for pet in pets]
-    # Return pet information as JSON response
-    return jsonify(pet_info)
-
-"""create pet page"""
-@app.route('/create_pet')
-def create_pet_page():
-    return render_template('create_pet.html')
-
 """About us page"""
 @app.route('/about-us')
 def about_us():
     return render_template('about_us.html')
 
-"""Q&A"""
-@app.route('/dashboard/questions')
-def questions():
-    return render_template('questions.html')
 
-@app.route('/update_pet/<int:pet_id>')
-def update_pet_page(pet_id):
-    return render_template('update_pet.html', pet_id=pet_id)
+
+
+"""show user"""
+@app.route('/user-info')
+def show_user():
+    return render_template('show_user.html')
+
+"""show pets"""
+@app.route('/my-pets')
+def show_pets():
+    user_id = session.get('user_id')
+    if user_id is None:
+        return redirect(url_for('login'))
+    response = requests.get(f'http://127.0.0.1:5000/api/users/{user_id}/pets')
+    if response.status_code == 200:
+        user_pets = response.json()
+    else:
+        return render_template('error.html', error='Failed to fetch user pets')
+    return render_template('show_pets.html', user_pets=user_pets)
+
+"""update pet"""
+@app.route('/update-pet/<int:pet_id>', methods=['GET', 'POST'])
+def update_pet(pet_id):
+    if request.method == 'GET':
+        # Retrieve the pet from the database based on the provided pet_id
+        pet = Pet.query.get(pet_id)
+        if pet is None:
+            # If the pet with the given ID doesn't exist, return a 404 error
+            return render_template('error.html', error='Pet not found'), 404
+
+        # Render the update_pet.html template and pass the pet_id as a context variable
+        return render_template('update_pet.html', pet_id=pet_id)
+    elif request.method == 'POST':
+        # Handle the form submission to update the pet's information
+        weight = request.form.get('weight')
+        height = request.form.get('height')
+        
+        # Update the pet's weight and height in the database
+        pet = Pet.query.get(pet_id)
+        if pet:
+            pet.weight = weight
+            pet.height = height
+            db.session.commit()
+            return redirect(url_for('show_pets'))
+        else:
+            return render_template('error.html', error='Pet not found'), 404
+
+"""delete pet"""
+@app.route('/delete-pet/<int:pet_id>', methods=['POST'])
+def delete_pet(pet_id):
+    if request.form.get('_method') == 'DELETE':
+        # Handle the deletion logic here
+        pet = Pet.query.get(pet_id)
+        if pet:
+            db.session.delete(pet)
+            db.session.commit()
+            return redirect(url_for('show_pets'))
+        else:
+            return render_template('error.html', error='Pet not found'), 404
+    else:
+        return "Method not allowed", 405
+
+
+"""create pet"""
+@app.route('/create-pet', methods=['GET'])
+def create_pet_form():
+    return render_template('create_pet.html')
+
 
 # Run the Flask app
 if __name__ == '__main__':

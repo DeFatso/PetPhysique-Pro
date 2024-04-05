@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <link rel="stylesheet" href="../static/styles/show_user.css">
+    <link rel="icon" type="Image/png" href="../static/images/icon.png">
+    <nav>
+        <a href="/dashboard">Home</a>
+        <a href="#">Info</a>
+        <a href="#">My Pets</a>
+    </nav>
+</head>
+
+<body>
+    <div class="container">
+        <h1>User Information</h1>
+        <div class="info">
+            <p><strong>Username:</strong> {{ session.username }}</p>
+            <p><strong>Email:</strong> {{ session.email }}</p>
+            <p><strong>User ID:</strong> {{ session.user_id }}</p>
+        </div>
+    </div>
+</body>
+
+</html
