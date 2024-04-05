@@ -66,41 +66,61 @@
       </main>
     </div>
     <script>
-              var user_id = {{ user_id }};
-              console.log('User ID:', user_id);
-              function showPetInfo(user_id) {
-          console.log('showPetInfo function called');
-          if (user_id) { // Check if user_id is not undefined
-              fetch(`/api/users/${user_id}/pets`)
-              .then(response => {
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
+                          var user_id = {{ user_id }};
+                          console.log('User ID:', user_id);
+                          function showPetInfo(user_id) {
+                      console.log('showPetInfo function called');
+                      if (user_id) { // Check if user_id is not undefined
+                          fetch(`/api/users/${user_id}/pets`)
+                          .then(response => {
+                              if (!response.ok) {
+                                  throw new Error('Network response was not ok');
+                              }
+                              return response.json();
+                          })
+                          .then(data => {
+                              var mainContent = document.querySelector('.main');
+                              var petInfoHTML = '<div id="pet-info">';
+                              data.forEach(pet => {
+                                var bmi = (pet.weight / (pet.height * pet.height)).toFixed(2);
+                                  petInfoHTML += '<div>' +
+                                                  '<img src="../static/images/dog.svg" alt="Default Pet Picture">' +
+                                                  '<p> Name: ' + pet.name + '</p>' +
+                                                  '<p>Weight: ' + pet.weight + '</p>' +
+                                                  '<p>Height: ' + pet.height + '</p>' +
+                                                  '<p>BMI: ' + bmi + '</p>' +
+                                                  '<button type="button" onclick="deletePet(' + pet.id + ')">Delete</button>' +
+                                                  '<button type="button" onclick="updatePet(' + pet.id + ')">Update</button>' +
+                                                  '</div>';
+                              });
+                              petInfoHTML += '<button type="button" onclick="window.location.href=\'/create_pet\'">Create Pet</button>';
+                              petInfoHTML += '</div>';
+                              mainContent.innerHTML = petInfoHTML;
+                          })
+                          .catch(error => console.error('Error fetching pet information:', error));
+                      } else {
+                          console.error('User ID is undefined');
+                      }
                   }
-                  return response.json();
-              })
-              .then(data => {
+                  function updatePet(pet) {
+          let petId = pet.id;
+          console.log('Update button clicked for pet ID:', petId);
+          // Define the options for the fetch request
+          const options = {
+              method: 'PUT', // Specify the method as PUT
+          };
+
+          // Make an AJAX request to update the pet
+          fetch('/update_pet/' + petId, options)
+              .then(response => response.text())
+              .then(html => {
+                  // Display the update_pet template in the main content area
                   var mainContent = document.querySelector('.main');
-                  var petInfoHTML = '<div id="pet-info">';
-                  data.forEach(pet => {
-                    var bmi = (pet.weight / (pet.height * pet.height)).toFixed(2);
-                      petInfoHTML += '<div>' +
-                                      '<img src="../static/images/dog.svg" alt="Default Pet Picture">' +
-                                      '<p> Name: ' + pet.name + '</p>' +
-                                      '<p>Weight: ' + pet.weight + '</p>' +
-                                      '<p>Height: ' + pet.height + '</p>' +
-                                      '<p>BMI: ' + bmi + '</p>' +
-                                      '<button type="button" onclick="deletePet(' + pet.id + ')">Delete</button>' +
-                                      '<button type="button" onclick="updatePet(' + pet.id + ')">Update</button>' +
-                                      '</div>';
-                  });
-                  petInfoHTML += '<button type="button" onclick="window.location.href=\'/create_pet\'">Create Pet</button>';
-                  petInfoHTML += '</div>';
-                  mainContent.innerHTML = petInfoHTML;
+                  mainContent.innerHTML = html;
               })
-              .catch(error => console.error('Error fetching pet information:', error));
-          } else {
-              console.error('User ID is undefined');
-          }
+              .catch(error => {
+                  console.error('Error fetching update_pet template:', error);
+              });
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>

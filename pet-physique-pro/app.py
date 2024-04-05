@@ -97,7 +97,7 @@ def signin():
         session['user_id'] = new_user.id
 
         # Redirect to dashboard (We have to change this to profile page)
-        return redirect(url_for('home'))
+        return redirect(url_for('/home'))
 
     else:
         return render_template("signup.html")
