@@ -199,6 +199,15 @@ def delete_pet(pet_id):
 def create_pet_form():
     return render_template('create_pet.html')
 
+"""infomation"""
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
+"""q&a"""
+@app.route('/questions')
+def questions():
+    return render_template('questions.html')
 
 # Run the Flask app
 if __name__ == '__main__':

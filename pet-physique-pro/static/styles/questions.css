@@ -1,0 +1,46 @@
+body {
+    background-color: #c5b5b5;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h5 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-top: 30px;
+}
+
+p {
+    color: #666;
+    font-size: 1rem;
+}
+
+h5:first-of-type {
+    margin-top: 0;
+}
+
+/* Style container */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    background-color: maroon;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
