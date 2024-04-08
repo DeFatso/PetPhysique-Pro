@@ -4,8 +4,23 @@
   box-sizing: border-box;
 }
 
+.header-content {
+  opacity: 0;
+}
+
+#features,
+#why-choose,
+#get-started {
+  opacity: 0;
+}
+
+footer p {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
 body {
-  background-image: url(../images/landing_page.jpeg);
   background-size: cover;
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -76,4 +91,36 @@ footer {
 
 footer p {
   font-size: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  header h1 {
+    font-size: 2rem; 
+  }
+
+  header p {
+    font-size: 1rem; 
+  }
+
+  main {
+    padding: 10px; 
+  }
+
+  section h2 {
+    font-size: 1.5rem; 
+  }
+
+  button {
+    padding: 8px 16px; 
+    font-size: 0.9rem; 
+  }
+
+  footer {
+    margin-top: 10%; 
+    padding: 15px 0; 
+  }
+
+  footer p {
+    font-size: 0.9rem; 
+  }
 }

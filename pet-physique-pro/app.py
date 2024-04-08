@@ -17,6 +17,22 @@ from api.users import get_user_pets
 app = Flask(__name__)
 app.secret_key = 'PetPhysique' # for session management
 
+pet_bmi_ranges = {
+    "Abyssinian": (14.34, 17.67),
+    "Africanis": (72.12, 78.45),
+    "American Shorthair": (15.35, 17.67),
+    "Bengal": (100, 112),
+    "Birman": (80, 100),
+    "British Shorthair": (33.33, 37),
+    "Basenji": (62.33, 64.9),
+    "Beagle": (65.44, 82.64),
+    "Boerboel": (191.14, 216.84),
+    "Boxer": (74.34, 79.67),
+    "Bulldog": (156, 187)
+    
+    # Add more pet types and their healthy BMI ranges here
+}
+
 
 """Database configuration"""
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -138,7 +154,6 @@ def about_us():
 def show_user():
     return render_template('show_user.html')
 
-"""show pets"""
 @app.route('/my-pets')
 def show_pets():
     user_id = session.get('user_id')
@@ -147,9 +162,28 @@ def show_pets():
     response = requests.get(f'http://127.0.0.1:5000/api/users/{user_id}/pets')
     if response.status_code == 200:
         user_pets = response.json()
+        for pet in user_pets:
+            bmi = pet['weight'] / (pet['height'] ** 2)
+            healthy_bmi_range = pet_bmi_ranges.get(pet['type'])
+            if healthy_bmi_range:
+                min_bmi, max_bmi = healthy_bmi_range
+                if min_bmi <= bmi <= max_bmi:
+                    pet['health_status'] = 'healthy'
+                elif bmi < min_bmi:
+                    pet['health_status'] = 'underweight'
+                else:
+                    pet['health_status'] = 'overweight'
+                # Calculate health percentage
+                if pet['health_status'] == 'healthy':
+                    pet['health_percentage'] = 100
+                elif pet['health_status'] == 'underweight':
+                    pet['health_percentage'] = 50
+                else:
+                    pet['health_percentage'] = 25
     else:
         return render_template('error.html', error='Failed to fetch user pets')
     return render_template('show_pets.html', user_pets=user_pets)
+
 
 """update pet"""
 @app.route('/update-pet/<int:pet_id>', methods=['GET', 'POST'])
@@ -208,6 +242,10 @@ def info():
 @app.route('/questions')
 def questions():
     return render_template('questions.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 # Run the Flask app
 if __name__ == '__main__':

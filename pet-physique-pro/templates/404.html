@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c5b5b5;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .error-container {
+            text-align: center;
+        }
+        .error-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            overflow: hidden; /* Hide overflow */
+            white-space: nowrap; /* Prevent line break */
+            display: inline-block; /* Display inline for animation */
+        }
+        .error-text {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+        .btn-home {
+            background-color: maroon;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .btn-home:hover {
+            background-color: maroon;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-title" id="error-title"></h1>
+        <p class="error-text">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <a href="/" class="btn btn-home">Go back to Home</a>
+    </div>
+    <script>
+        // Function to animate text display
+        function animateText(textElement, text) {
+            let index = 0;
+            const interval = setInterval(() => {
+                // Add one letter at a time
+                textElement.textContent += text[index++];
+                // Stop animation when all letters are displayed
+                if (index === text.length) clearInterval(interval);
+            }, 100); // Adjust speed as needed
+        }
+
+        // Call the function when the page is loaded
+        window.onload = function() {
+            const errorTitleElement = document.getElementById('error-title');
+            const errorText = '404 - Page Not Found';
+            animateText(errorTitleElement, errorText);
+        };
+    </script>
+</body>
+</html>

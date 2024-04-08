@@ -1,50 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PetPhysique Pro - Your Pet's Health, Elevated</title>
     <link rel="stylesheet" href="../static/styles/landing_page.css" />
-  </head>
-  <body>
-    <header>
-      <h1>PetPhysique Pro</h1>
-      <p>Your Pet's Health, Elevated</p>
-    </header>
-    <main>
-      <section id="features">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script> <!-- Anime.js library for animations -->
+</head>
+<body>
+<header>
+    <h1>PetPhysique Pro</h1>
+    <p>Your Pet's Health, Elevated</p>
+</header>
+<main>
+    <section id="features">
         <h2>Key Features</h2>
         <ul>
-          <li>BMI Calculator</li>
-          <li>Growth Tracking</li>
-          <li>Progress Visualization</li>
-          <li>Personalized Recommendations</li>
-          <li>Alerts</li>
+            <li>BMI Calculator</li>
+            <li>Growth Tracking</li>
+            <li>Progress Visualization</li>
+            <li>Personalized Recommendations</li>
+            <li>Alerts</li>
         </ul>
-      </section>
-      <section id="why-choose">
+    </section>
+    <section id="why-choose">
         <h2>Why Choose PetPhysique Pro?</h2>
         <ul>
-          <li>Professional-grade Tools</li>
-          <li>Sleek and Intuitive Design</li>
-          <li>Comprehensive Support</li>
-          <li>We are passionate about your Pets</li>
+            <li>Professional-grade Tools</li>
+            <li>Sleek and Intuitive Design</li>
+            <li>Comprehensive Support</li>
+            <li>We are passionate about your Pets</li>
         </ul>
-      </section>
-      <section id="get-started">
+    </section>
+    <section id="get-started">
         <h2>Get Started Today!</h2>
         <p>
-          Sign up with PetPhysique Pro now and embark on a path to optimal pet
-          wellness. Join a community of dedicated pet owners who trust
-          PetPhysique Pro to help them achieve their pet's health goals. Start
-          tracking your pet's BMI and growth progress with PetPhysique Pro
-          today!
+            Sign up with PetPhysique Pro now and embark on a path to optimal pet
+            wellness. Join a community of dedicated pet owners who trust
+            PetPhysique Pro to help them achieve their pet's health goals. Start
+            tracking your pet's BMI and growth progress with PetPhysique Pro
+            today!
         </p>
-        <button class="btn btn-maroon" type="button" onclick="window.location.href='/home'">get-started Now</button>
-      </section>
-    </main>
-    <footer>
-      <p>&copy; 2024 PetPhysique Pro. All rights reserved.</p>
-    </footer>
-  </body>
+        <button class="btn btn-maroon" type="button" onclick="window.location.href='/home'">Get Started Now</button>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 PetPhysique Pro. All rights reserved.</p>
+</footer>
+
+<script>
+    // Animation for header text
+    anime.timeline({loop: false})
+        .add({
+            targets: 'header h1',
+            translateY: [-50, 0],
+            opacity: [0, 1],
+            easing: 'easeOutExpo',
+            duration: 1500
+        })
+        .add({
+            targets: 'header p',
+            translateY: [-50, 0],
+            opacity: [0, 1],
+            easing: 'easeOutExpo',
+            duration: 1500
+        }, '-=1200'); // Offset animation for the paragraph by -1200ms
+
+    // Animation for sections
+    anime({
+        targets: '#features, #why-choose, #get-started',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        easing: 'easeOutExpo',
+        duration: 1500,
+        delay: anime.stagger(300) // Stagger animation for each section
+    });
+</script>
+</body>
 </html>

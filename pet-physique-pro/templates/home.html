@@ -23,5 +23,28 @@
         <img src="../static/images/home_5.jpeg" alt="images" width="23%">
         <img src="../static/images/home_7.jpeg" alt="images" width="23%">
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Animation for home_flex content
+        anime.timeline({loop: false})
+            .add({
+                targets: '#home_flex h1, #home_flex h3',
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                easing: 'easeOutExpo',
+                duration: 1500
+            });
+
+        // Animation for images
+        anime({
+            targets: '#images img',
+            translateY: [-50, 0],
+            opacity: [0, 1],
+            easing: 'easeOutExpo',
+            duration: 1500,
+            delay: anime.stagger(200) // Stagger animation for each image
+        });
+    </script>
 </body>
 </html>

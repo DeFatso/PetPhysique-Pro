@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show Pets</title>
-    <link rel="stylesheet" href="../static/styles/show_pets.css" />
-    <link rel="icon" type="Image/png" href="../static/images/icon.png" />
+    <link rel="stylesheet" href="../static/styles/show_pets.css">
+    <link rel="icon" type="Image/png" href="../static/images/icon.png">
     <nav>
-      <a href="/dashboard">Home</a>
-      <a href="/info">Pet Info</a>
-      <a href="/questions">Questions</a>
-      <a href="/user-info">My Info</a>
+        <a href="/dashboard">Home</a>
+        <a href="/info">Pet Info</a>
+        <a href="/questions">Questions</a>
+        <a href="/user-info">My Info</a>
     </nav>
-  </head>
+</head>
 
-  <body>
-    <div class="container">
-      <h1>My Pets</h1>
-      <ul>
+<body>
+<div class="container">
+    <h1>My Pets</h1>
+    <ul>
         {% for pet in user_pets %}
         <li>
-          Name: {{ pet.name }}, Type: {{ pet.type }}, Weight: {{ pet.weight }},
-          Height: {{ pet.height }}, Age: {{ pet.age }}, BMI: {{ (pet.weight / (pet.height ** 2)) | round(2) }}
-          <!-- Delete button -->
-          <form
-            action="/delete-pet/{{ pet.id }}"
-            method="POST"
-            style="display: inline"
-          >
-            <input type="hidden" name="_method" value="DELETE" />
-            <button type="submit">Delete</button>
-          </form>
-          <!-- Update button -->
-          <form action="/update-pet/{{ pet.id }}" method="GET">
-            <button type="submit">Update</button>
-          </form>
+            Name: {{ pet.name }}, Type: {{ pet.type }}, Weight: {{ pet.weight }},
+            Height: {{ pet.height }}, Age: {{ pet.age }}, BMI: {{ (pet.weight / (pet.height ** 2)) | round(2) }}
+            <!-- Add health indicator bar -->
+            <div class="health-bar {{ pet.health_status }}">
+                <!-- Adjust the width of the bar based on the health percentage -->
+                <div class="health-bar-fill" style="width: {{ pet.health_percentage }}%">
+                    &nbsp;
+                </div>
+            </div>
+            <!-- Delete and update buttons -->
+            <form action="/delete-pet/{{ pet.id }}" method="POST" style="display: inline">
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit">Delete</button>
+            </form>
+            <form action="/update-pet/{{ pet.id }}" method="GET">
+                <button type="submit">Update</button>
+            </form>
         </li>
         {% endfor %}
-      </ul>
-    </div>
-    <div class="content">
-      <p>
+    </ul>    
+</div>
+<div class="content">
+    <p>
         This is where you can manage your pets and view your user information.
-      </p>
-      <a href="/create-pet"><button class="button">Create Pet</button></a>
-    </div>
-  </body>
+    </p>
+    <a href="/create-pet"><button class="button">Create Pet</button></a>
+</div>
+</body>
 </html>
