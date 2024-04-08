@@ -28,7 +28,25 @@ pet_bmi_ranges = {
     "Beagle": (65.44, 82.64),
     "Boerboel": (191.14, 216.84),
     "Boxer": (74.34, 79.67),
-    "Bulldog": (156, 187)
+    "Bulldog": (156, 187),
+    "Bull Terrier": (60, 75),
+    "Chihuahua": (17.5, 23),
+    "Cocker Spaniel": (39, 48),
+    "Dachshund": (20, 25),
+    "Doberman": (75, 90),
+    "German Shepherd": (75, 90),
+    "Golden Retriever": (75, 90),
+    "Labrador Retriever": (60, 75),
+    "Maine Coon": (20, 25),
+    "Manx": (20, 25),
+    "Ocicat": (14, 18),
+    "Poodle": (35, 50),
+    "Pug": (18, 22),
+    "Rottweiler": (75, 90),
+    "Russian Blue": (18, 25),
+    "Siberian Husky": (35, 50),
+    "Somali": (8, 12),
+    "Sphynx": (14, 18)
     
     # Add more pet types and their healthy BMI ranges here
 }
