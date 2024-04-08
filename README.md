@@ -43,7 +43,7 @@ This README provides an overview of the features, installation instructions, and
 3. **Body Composition Assessment:** Input your pet's current weight and height to generate a comprehensive body composition analysis.
 4. **Track Progress:** Monitor changes in your pet's physique over time using the visual display and adjust their diet and exercise regimen accordingly.
 
-![Dashboard](dashboard.png)
+![Dashboard](dashboard.PNG)
 
 ## AUTHORS
 - Farai Vambe
