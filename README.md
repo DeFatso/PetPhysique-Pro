@@ -1,7 +1,7 @@
 ### PetPhysique-Pro
 
 ## OVERVIEW
-The Pet BMI Checker App is a simple and intuitive tool designed to help pet owners monitor the Body Mass Index (BMI) of their pets.
+The PetPhysique-Pro App is a simple and intuitive tool designed to help pet owners monitor the Body Mass Index (BMI) of their pets.
 By entering the weight and height of their pet, users can quickly determine if their pet is underweight, at an ideal weight, overweight, or obese according to standard BMI categories for pets.
 
 This README provides an overview of the features, installation instructions, and usage guidelines for the PetPhysique-Pro App.
@@ -20,7 +20,7 @@ This README provides an overview of the features, installation instructions, and
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone
+   git clone https://github.com/DeFatso/PetPhysique-Pro.git
    ```
 2. Navigate to the project directory:
    ```bash
