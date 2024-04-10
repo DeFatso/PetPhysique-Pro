@@ -7,24 +7,42 @@
 .header-content {
   opacity: 0;
 }
-
+#why-choose {
+  padding: 10%;
+}
+#features
+{
+  padding: 10%;
+}
 #features,
 #why-choose,
 #get-started {
   opacity: 0;
 }
 
+.second {
+  margin-top: 50px;
+  display: flex;
+  justify-content: right;
+}
 footer p {
   font-size: 1rem;
   cursor: pointer;
 }
 
+.key_features {
+  margin-top: 6%;
+  display: flex;
+  padding: 10px;
+}
 
 body {
+  margin-right: 7%;
+  margin-left: 7%;
   background-size: cover;
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #f9f9f9;
+  background-color: thistle;
   color: #333;
   margin: 0;
   padding: 0;
@@ -46,7 +64,8 @@ header p {
 }
 
 main {
-  padding: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 section {
@@ -68,8 +87,8 @@ li {
 
 button {
   padding: 10px 20px;
-  background-color: maroon;
-  color: #fff;
+  background-color: rgb(255, 255, 255);
+  color: maroon;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -96,6 +115,31 @@ footer p {
 @media only screen and (max-width: 600px) {
   header h1 {
     font-size: 2rem; 
+  }
+
+  .key_features {
+    display: inline;
+    width: 100%;
+  }
+
+  .second {
+    display: inline;
+  }
+
+  .key_image {
+    display: contents;
+  }
+
+  .key_image img {
+    width: 300px;
+  }
+
+  .second_image img {
+    width: 300px;
+  }
+
+  .third_image img {
+    width: 300px;
   }
 
   header p {

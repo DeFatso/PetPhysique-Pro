@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.secret_key = 'PetPhysique' # for session management
 
 pet_bmi_ranges = {
-    "Abyssinian": (14.34, 17.67),
+    "Abyssinian": (14.34, 100),
     "Africanis": (72.12, 78.45),
     "American Shorthair": (15.35, 17.67),
     "Bengal": (100, 112),
@@ -32,7 +32,7 @@ pet_bmi_ranges = {
     "Bull Terrier": (60, 75),
     "Chihuahua": (17.5, 23),
     "Cocker Spaniel": (39, 48),
-    "Dachshund": (20, 25),
+    "Dachshund": (175 , 295.86),
     "Doberman": (75, 90),
     "German Shepherd": (75, 90),
     "Golden Retriever": (75, 90),
