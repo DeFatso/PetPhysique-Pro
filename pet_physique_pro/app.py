@@ -19,7 +19,7 @@ def create_app():
     app.secret_key = 'PetPhysique' # for session management
 
     pet_bmi_ranges = {
-        "Abyssinian": (14.34, 100),
+        "Abyssinian": (14.34, 17.67),
         "Africanis": (72.12, 78.45),
         "American Shorthair": (15.35, 17.67),
         "Bengal": (100, 112),
@@ -36,8 +36,8 @@ def create_app():
         "Dachshund": (175 , 295.86),
         "Doberman": (75, 90),
         "German Shepherd": (75, 90),
-        "Golden Retriever": (75, 90),
-        "Labrador Retriever": (60, 75),
+        "Golden Retriever": (91, 97),
+        "Labrador Retriever": (82, 90),
         "Maine Coon": (20, 25),
         "Manx": (20, 25),
         "Ocicat": (14, 18),
@@ -47,7 +47,7 @@ def create_app():
         "Russian Blue": (18, 25),
         "Siberian Husky": (35, 50),
         "Somali": (8, 12),
-        "Sphynx": (14, 18)
+        "Sphynx": (96, 126)
         
         # Add more pet types and their healthy BMI ranges here
     }
@@ -178,7 +178,8 @@ def create_app():
         user_id = session.get('user_id')
         if user_id is None:
             return redirect(url_for('login'))
-        response = requests.get(f'http://127.0.0.1:5000/api/users/{user_id}/pets')
+        url = url_for('app_views.get_user_pets', user_id=user_id, _external=True)
+        response = requests.get(url)
         if response.status_code == 200:
             user_pets = response.json()
             for pet in user_pets:
