@@ -1,8 +1,8 @@
 from flask import redirect, request, jsonify, session, url_for
 from api.db import db  # Import Database setup
 from flask_bcrypt import Bcrypt
-from api.models import UserSchema, PetSchema, User, Pet
-from api.blueprint import app_views
+from .models import UserSchema, PetSchema, User, Pet
+from .blueprint import app_views
 
 bcrypt = Bcrypt()
 

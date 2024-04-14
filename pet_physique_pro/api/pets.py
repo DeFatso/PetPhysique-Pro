@@ -1,7 +1,7 @@
 from flask import request, jsonify
-from api.db import db # Import Database setup
-from api.models import PetSchema, Pet, User
-from api.blueprint import app_views
+from .db import db # Import Database setup
+from .models import PetSchema, Pet, User
+from .blueprint import app_views
 
 
 """Get all pets route"""
